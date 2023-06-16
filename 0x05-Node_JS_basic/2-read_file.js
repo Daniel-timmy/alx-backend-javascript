@@ -17,6 +17,7 @@ function countStudents(path) {
         for (let j = 0; j < results.length; j++) {
             list.push(results[j]['field']);
         }
+        
         const uniqueList = list.filter((item, index) => list.indexOf(item) === index);
         for(let k = 0; k < uniqueList.length; k++){
             let cnt = 0;
