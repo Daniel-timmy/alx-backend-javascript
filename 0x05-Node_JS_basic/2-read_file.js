@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const nam = 'database.csv';
+const nam = 'dataase.csv';
 function countStudents(path) {
     const results = [];
     try {
@@ -31,7 +31,8 @@ function countStudents(path) {
             console.log(`Number of students in ${uniqueList[k]}: ${cnt}. List: ${nlist}`);
         }
         } catch (error) {
-            throw Error('Cannot load the database');
+            console.error('Cannot load the database');
         } 
 }
+countStudents(nam)
 module.exports = countStudents;
