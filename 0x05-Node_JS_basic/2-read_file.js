@@ -2,6 +2,7 @@ const fs = require('fs');
 
 function countStudents(path) {
     const results = [];
+    
     try {
         const file = fs.readFileSync(path, 'utf-8');
         const lines = file.split('\n');
@@ -28,6 +29,7 @@ function countStudents(path) {
                     nlist.push(results[n]['firstname']);
                 }
             }
+            
             console.log(`Number of students in ${uniqueList[k]}: ${cnt}. List: ${nlist.join(', ')}`);
         }
         } catch (error) {

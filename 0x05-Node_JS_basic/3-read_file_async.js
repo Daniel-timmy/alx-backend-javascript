@@ -33,6 +33,7 @@ function countStudents(path) {
                             nlist.push(results[n]['firstname']);
                         }
                     }
+                    
                     console.log(`Number of students in ${uniqueList[k]}: ${cnt}. List: ${nlist.join(', ')}`);
                 }
             }
