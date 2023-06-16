@@ -1,45 +1,42 @@
 const { readFile } = require('fs');
 
-const results = [];
-const nam = 'dataase.csv';
-
-function countStudents(path) {
-    return new Promise((resolve, reject) => {
-        readFile(path, 'utf-8', (error, data) => {
-            if (error) {
-                reject(Error('Cannot load database'));
+function countStudents(fileName) {
+  const students = {};
+  const fields = {};
+  let length = 0;
+  return new Promise((resolve, reject) => {
+    readFile(fileName, (error, data) => {
+      if (error) {
+        reject(Error('Cannot load the database'));
+      } else {
+        const lines = data.toString().split('\n');
+        for (let i = 0; i < lines.length; i += 1) {
+          if (lines[i]) {
+            length += 1;
+            const field = lines[i].toString().split(',');
+            if (Object.prototype.hasOwnProperty.call(students, field[3])) {
+              students[field[3]].push(field[0]);
             } else {
-                const lines = data.split('\n');
-    
-                for (let i = 1; i < lines.length; i++) {
-                const row = lines[i].trim().split(',');
-                const obj = {'firstname': row[0], 'lastname': row[1], 'age': row[2], 'field': row[3]}
-                results.push(obj);
-                }
-                console.log(`Number of students: ${results.length}`);
-    
-                list = []
-                for (let j = 0; j < results.length; j++) {
-                    list.push(results[j]['field']);
-                }
-                const uniqueList = list.filter((item, index) => list.indexOf(item) === index);
-                
-                for(let k = 0; k < uniqueList.length; k++){
-                    let cnt = 0;
-                    nlist = []
-                    for (let n = 0; n < results.length; n++){
-                        if (uniqueList[k] === results[n]['field']){
-                            cnt++;
-                            nlist.push(results[n]['firstname']);
-                        }
-                    }
-                    
-                    console.log(`Number of students in ${uniqueList[k]}: ${cnt}. List: ${nlist.join(', ')}`);
-                }
+              students[field[3]] = [field[0]];
             }
-            resolve(data);
-        });
+            if (Object.prototype.hasOwnProperty.call(fields, field[3])) {
+              fields[field[3]] += 1;
+            } else {
+              fields[field[3]] = 1;
+            }
+          }
+        }
+        const l = length - 1;
+        console.log(`Number of students: ${l}`);
+        for (const [key, value] of Object.entries(fields)) {
+          if (key !== 'field') {
+            console.log(`Number of students in ${key}: ${value}. List: ${students[key].join(', ')}`);
+          }
+        }
+        resolve(data);
+      }
     });
+  });
 }
 
 module.exports = countStudents;
