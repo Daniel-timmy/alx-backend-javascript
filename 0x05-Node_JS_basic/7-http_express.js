@@ -1,7 +1,6 @@
-const http = require('http');
-const { readFile } = require('fs');
-
-const hostname = '127.0.0.1';
+const express = require('express')
+const { readFile } = require('fs')
+const app = express();
 
 function countStudents(fileName) {
     const students = {};
@@ -44,22 +43,19 @@ function countStudents(fileName) {
     });
   }
 
-const app = http.createServer((req, res) => {
-    if(req.url === '/'){
-        res.end('Hello Holberton School!');
-    }
-    if(req.url === '/students'){
-        res.write('This is the list of our students'); 
-        countStudents(process.argv[2].toString()).then((output) => {
-            const outString = output.slice(0, -1);
-            res.end(outString);
-          }).catch(() => {
-            res.statusCode = 404;
-            res.end('Cannot load the database');
-          });      
-    }
+
+app.get('/', (req, res)=>{
+    res.send('Hello Holberton School!');
+});
+app.get('/students', (req, res)=>{
+    countStudents(process.argv[2].toString()).then((output) => {
+        res.send(['This is the list of our students', output].join('\n'));
+      }).catch(() => {
+        res.statusCode = 404;
+        res.send('Cannot load the database');
+      });      
 });
 
-app.listen(1245, hostname);
+app.listen(1245);
 
 module.exports = app;
