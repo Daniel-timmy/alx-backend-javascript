@@ -8,6 +8,7 @@ describe('cal', () => {
         assert.equal(calculateNumber(1.2, 0.2), 1);
         assert.equal(calculateNumber(3.5, 2.7), 7);
     })
+    
     it('a', () => {
         assert.equal(calculateNumber(1.78, 2), 4);
         assert.equal(calculateNumber(1.2, 1), 2);
