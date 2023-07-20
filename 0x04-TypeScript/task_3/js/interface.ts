@@ -1,6 +1,7 @@
-export type rowID = number;
+export type RowID = number;
+
 export interface RowElement {
-    firstName: string;
-    lastName: string;
-    age?: number;
+  firstName: string;
+  lastName: string;
+  age?: number;
 }
